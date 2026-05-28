@@ -7,7 +7,8 @@ class SearchResultsPage {
   constructor(page) {
     this.page = page;
     this.resultsHeading = page.locator('h1, h2, span').filter({ hasText: /results/i }).first();
-    this.firstProduct = page.locator('a[href*="/dp/"]').first();
+    // Find first product link in search results - target product result containers
+    this.firstProduct = page.locator('div[data-component-type="s-search-result"] a[href*="/dp/"]').first();
   }
 
   /**
@@ -15,13 +16,8 @@ class SearchResultsPage {
    */
   async waitForSearchResultsToLoad() {
     await this.page.waitForLoadState('domcontentloaded');
-    // Wait for at least one product to be visible
-    try {
-      await this.firstProduct.first().waitFor({ state: 'visible', timeout: 15000 });
-    } catch (e) {
-      // If products don't load, just continue
-      console.log('Products did not load within timeout');
-    }
+    // Wait for page content to render
+    await this.page.waitForTimeout(2000);
   }
 
   async clickOnFirstProduct() {

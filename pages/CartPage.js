@@ -13,6 +13,8 @@ class CartPage {
     this.proceedToCheckoutButton = page.locator('button:has-text("Proceed to checkout"), button:has-text("Proceed to Buy")');
     this.cartTotal = page.locator('span:has-text(/₹|Rs|\$/)').first();
     this.itemCount = page.locator('[id="nav-cart-count"]');
+    this.addedToCartText= page.locator('.a-size-medium-plus.a-color-base.sw-atc-text.a-text-bold');
+    
   }
 
   /**

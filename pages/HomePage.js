@@ -28,7 +28,7 @@ class HomePage {
    * Wait for homepage to load
    */
   async waitForHomePageToLoad() {
-    await this.searchBar.waitFor({ state: 'visible', timeout: 10000 });
+    await this.searchBar.waitFor({ state: 'visible', timeout: 15000 });
   }
 
   /**

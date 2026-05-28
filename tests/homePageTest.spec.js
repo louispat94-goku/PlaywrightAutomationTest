@@ -4,7 +4,7 @@ const { SearchResultsPage } = require('../pages/SearchResultsPage');
 const homePageTestData = require('./data/HomePageTestData');
 
 test.describe('Amazon India Homepage Tests', () => {
-  test('Search for a product using the search bar', async ({ page }) => {
+  test('Search for a product using the search bar and verify the first product contains the search term', async ({ page }) => {
     const homePage = new HomePage(page);
     const searchResultsPage = new SearchResultsPage(page);
 
@@ -13,6 +13,7 @@ test.describe('Amazon India Homepage Tests', () => {
     await homePage.searchForProduct(homePageTestData.phone);
     await searchResultsPage.waitForSearchResultsToLoad();
 
+    //Verify search results heading contains the search Product name.
     //Verify search results heading contains the search Product name.
     const resultsHeading = await searchResultsPage.resultsHeading.textContent();
     expect(resultsHeading).toContain(homePageTestData.phone);    

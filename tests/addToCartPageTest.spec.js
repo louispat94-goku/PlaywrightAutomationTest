@@ -1,0 +1,43 @@
+const {test, expect} = require('@playwright/test');
+const { HomePage } = require('../pages/HomePage');
+const { SearchResultsPage } = require('../pages/SearchResultsPage');
+const { ProductDetailsPage } = require('../pages/ProductDetailsPage');
+const { CartPage } = require('../pages/CartPage');
+const homePageTestData = require('./data/HomePageTestData');
+
+test.describe('Amazon India Homepage Tests', () => {
+  test('Verify the Added To Cart is displayed', async ({ page }) => {
+    const homePage = new HomePage(page);
+    const searchResultsPage = new SearchResultsPage(page);
+    const productDetailsPage = new ProductDetailsPage(page);
+    const cartPage = new CartPage(page);
+
+    await homePage.navigateToHome();
+    await homePage.waitForHomePageToLoad();
+    await homePage.searchForProduct(homePageTestData.phone);
+    await searchResultsPage.waitForSearchResultsToLoad();
+
+    //Verify search results heading contains the search Product name.
+    const resultsHeading = await searchResultsPage.resultsHeading.textContent();
+    expect(resultsHeading).toContain(homePageTestData.phone); 
+    
+        // Click on the first product and wait for navigation to product details page
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+      searchResultsPage.firstProduct.click()
+    ]);
+    await productDetailsPage.waitForProductDetailsToLoad();
+    
+    // Verify we're on a product details page and it contains the searched product
+    const pageTitle = await page.title();
+    expect(pageTitle.toLowerCase()).toContain(homePageTestData.phone.toLowerCase());
+
+    // Click on Add to Cart button
+    await productDetailsPage.clickAddToCartButton();
+
+    //Verify the item is added to cart by verifying the cart count value from the cart icon. 
+    await productDetailsPage.verifyAddedToCartCount(1);
+    const addedToCartText= await cartPage.addedToCartText().textContent();  
+    expect(addedToCartText).toContain('Added to Cart');
+});
+});
