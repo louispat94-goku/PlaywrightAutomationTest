@@ -6,7 +6,7 @@ const { expect } = require('@playwright/test');
 class ProductDetailsPage {
   constructor(page) {
     this.page = page;
-    this.addToCartButton = page.locator('//div[@class="a-section a-spacing-none a-padding-none"]//input//following-sibling::span[text()="Add to cart"]');
+    this.addToCartButton = page.getByRole('button', { name: /add to cart/i })
     
   }
   /**
@@ -22,17 +22,11 @@ class ProductDetailsPage {
    */
   async clickAddToCartButton() {
     //await expect(this.addToCartButton).toBeEnabled();
-    await this.waitForProductDetailsToLoad();
+    //await this.waitForProductDetailsToLoad();
     await this.addToCartButton.click();
   }
 
-  /**
-   * Verify Add to Cart button is visible and enabled
-   */
-  async verifyAddToCartButtonVisible() {
-    await expect(this.addToCartButton).toBeVisible();
-    await expect(this.addToCartButton).toBeEnabled();
-  }
+  
 
   /**
    * Verify Added product count Value from the cart icon

@@ -14,7 +14,7 @@ class CartPage {
     this.cartTotal = page.locator('span:has-text(/₹|Rs|\$/)').first();
     this.itemCount = page.locator('[id="nav-cart-count"]');
     this.addedToCartText= page.locator('.a-size-medium-plus.a-color-base.sw-atc-text.a-text-bold');
-    
+    this.proceedToBuyButton = page.locator('input[name="proceedToRetailCheckout"]');
   }
 
   /**
@@ -22,13 +22,6 @@ class CartPage {
    */
   async waitForCartPageToLoad() {
     await this.page.waitForLoadState('domcontentloaded');
-  }
-
-  /**
-   * Check if cart is empty
-   */
-  async isCartEmpty() {
-    return await this.emptyCartMessage.isVisible().catch(() => false);
   }
 
   /**

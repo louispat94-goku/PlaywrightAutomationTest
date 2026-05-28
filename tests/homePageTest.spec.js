@@ -1,7 +1,7 @@
 const {test, expect} = require('@playwright/test');
 const { HomePage } = require('../pages/HomePage');
 const { SearchResultsPage } = require('../pages/SearchResultsPage');
-const homePageTestData = require('./data/HomePageTestData');
+const homePageTestData = require('../data/HomePageTestData');
 
 test.describe('Amazon India Homepage Tests', () => {
   test('Search for a product using the search bar and verify the first product contains the search term', async ({ page }) => {

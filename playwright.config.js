@@ -5,7 +5,7 @@ export default defineConfig({
     reporter: 'html',
 
   // Retry failed tests
-  retries: 1,
+  retries: 0,
 
   // Test timeout
   timeout: 30000,
@@ -28,6 +28,8 @@ export default defineConfig({
 
     // Capture trace on retry
     trace: 'on-first-retry',
+
+    fullyParallel: false,
   },
 
 });

@@ -3,7 +3,7 @@ const { HomePage } = require('../pages/HomePage');
 const { SearchResultsPage } = require('../pages/SearchResultsPage');
 const { ProductDetailsPage } = require('../pages/ProductDetailsPage');
 const { CartPage } = require('../pages/CartPage');
-const homePageTestData = require('./data/HomePageTestData');
+const homePageTestData = require('../data/HomePageTestData');
 
 test.describe('Amazon India Homepage Tests', () => {
   test('Verify the Added To Cart is displayed', async ({ page }) => {
@@ -21,18 +21,27 @@ test.describe('Amazon India Homepage Tests', () => {
     const resultsHeading = await searchResultsPage.resultsHeading.textContent();
     expect(resultsHeading).toContain(homePageTestData.phone); 
     
-        // Click on the first product and wait for navigation to product details page
+    // Click on the first product - navigate in same window
+    // Remove target="_blank" if present to force same-window navigation
+    await page.evaluate(() => {
+      const link = document.querySelector('a[href*="/dp/"]');
+      if (link) link.removeAttribute('target');
+    });
+    
     await Promise.all([
-      page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+      page.waitForURL(/\/dp\/[A-Z0-9]+/),
       searchResultsPage.firstProduct.click()
     ]);
-    await productDetailsPage.waitForProductDetailsToLoad();
+    
+    // Wait for the page to load
+    await page.waitForLoadState('domcontentloaded');
     
     // Verify we're on a product details page and it contains the searched product
     const pageTitle = await page.title();
     expect(pageTitle.toLowerCase()).toContain(homePageTestData.phone.toLowerCase());
 
-    // Click on Add to Cart button
+    // Verify Add to Cart button is visible and enabled and click on it.
+    await productDetailsPage.waitForProductDetailsToLoad();
     await productDetailsPage.clickAddToCartButton();
 
     //Verify the item is added to cart by verifying the cart count value from the cart icon. 
