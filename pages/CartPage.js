@@ -100,6 +100,15 @@ class CartPage {
     const isLoginRequired = await loginPrompt.isVisible().catch(() => false);
     expect(isLoginRequired).toBe(false);
   }
-}
+
+    /**
+     Verify the Add to Cart message is displayed after clicking the Add to Cart button.
+     */
+    async verifyAddedToCartMessage() {
+      await expect(this.addedToCartText).toBeVisible();
+      const messageText = (await this.addedToCartText.textContent()).trim();
+      expect(messageText).toContain('Added to Cart');
+    }
+  }
 
 module.exports = { CartPage };

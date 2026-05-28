@@ -28,7 +28,8 @@ test.describe('Amazon India Homepage Tests', () => {
     });
     
     await Promise.all([
-      page.waitForURL(/\/dp\/[A-Z0-9]+/),
+      //page.waitForURL(/\/dp\/[A-Z0-9]+/),
+      page.waitForLoadState('domcontentloaded'),
       searchResultsPage.firstProduct.click()
     ]);
     

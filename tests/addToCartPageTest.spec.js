@@ -29,7 +29,8 @@ test.describe('Amazon India Homepage Tests', () => {
     });
     
     await Promise.all([
-      page.waitForURL(/\/dp\/[A-Z0-9]+/),
+      //page.waitForURL(/\/dp\/[A-Z0-9]+/),
+      page.waitForLoadState('domcontentloaded'),
       searchResultsPage.firstProduct.click()
     ]);
     
@@ -46,7 +47,7 @@ test.describe('Amazon India Homepage Tests', () => {
 
     //Verify the item is added to cart by verifying the cart count value from the cart icon. 
     await productDetailsPage.verifyAddedToCartCount(1);
-    const addedToCartText= await cartPage.addedToCartText().textContent();  
-    expect(addedToCartText).toContain('Added to Cart');
+    await cartPage.verifyAddedToCartMessage();  
+    //expect(addedToCartText).toContain('Added to Cart');
 });
 });

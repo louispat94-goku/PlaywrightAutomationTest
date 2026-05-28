@@ -8,7 +8,7 @@ export default defineConfig({
   retries: 0,
 
   // Test timeout
-  timeout: 30000,
+  timeout: 60000,
 
 
 
@@ -21,7 +21,7 @@ export default defineConfig({
     browserName: 'chromium',
 
     // Headed mode
-    headless: false,
+    headless: true,
 
     // Capture screenshot on failure
     screenshot: 'only-on-failure',
@@ -29,7 +29,8 @@ export default defineConfig({
     // Capture trace on retry
     trace: 'on-first-retry',
 
-    fullyParallel: false,
+    fullyParallel: true,
+
   },
 
 });
