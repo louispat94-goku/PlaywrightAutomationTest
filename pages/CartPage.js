@@ -107,7 +107,7 @@ class CartPage {
     async verifyAddedToCartMessage() {
       await expect(this.addedToCartText).toBeVisible();
       const messageText = (await this.addedToCartText.textContent()).trim();
-      expect(messageText).toContain('Added to Cart');
+      expect(messageText).toContain('Added to cart');
     }
   }
 

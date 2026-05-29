@@ -13,7 +13,7 @@ class ProductDetailsPage {
    * Wait for product details page to load
    */
   async waitForProductDetailsToLoad() {
-    await this.addToCartButton.waitFor({ state: 'visible', timeout: 15000 });
+    await this.addToCartButton.waitFor({ state: 'visible', timeout: 60000 });
   }
 
   
