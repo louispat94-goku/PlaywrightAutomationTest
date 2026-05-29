@@ -1,6 +1,6 @@
 const HomePageTestData={
 
-    phone: 'apple iphone 16e',
+    phone: 'iphone 17e',
 
 
 };
